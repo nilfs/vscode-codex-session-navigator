@@ -4,3 +4,11 @@
 *.db
 .beads-credential-key
 .beads/proxieddb/
+
+# VS Code extension artifacts
+node_modules/
+dist/
+*.vsix
+
+# Local VS Code settings
+.vscode/

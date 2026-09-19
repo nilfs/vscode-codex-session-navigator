@@ -1,0 +1,10 @@
+.agents/
+.beads/
+.claude/
+.codex/
+.vscode/
+dist/
+node_modules/
+AGENTS.md
+CLAUDE.md
+skills-lock.json

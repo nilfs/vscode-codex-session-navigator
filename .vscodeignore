@@ -1,0 +1,17 @@
+.agents/**
+.beads/**
+.claude/**
+.codex/**
+.git/**
+.gitignore
+.prettierignore
+.prettierrc.json
+.vscode/**
+dist/**
+integration/**
+test/**
+AGENTS.md
+CLAUDE.md
+skills-lock.json
+package-lock.json
+*.vsix

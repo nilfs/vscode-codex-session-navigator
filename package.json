@@ -1,0 +1,150 @@
+{
+  "name": "codex-session",
+  "displayName": "Codex Sessions",
+  "description": "Open local Codex sessions related to the current VS Code workspace.",
+  "version": "0.2.0",
+  "publisher": "nilfs",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "vscode": "^1.138.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "codex",
+    "sessions",
+    "workspace"
+  ],
+  "main": "./extension.js",
+  "extensionKind": [
+    "ui"
+  ],
+  "activationEvents": [
+    "onView:codexSession.sessions",
+    "onCommand:codexSession.refresh",
+    "onCommand:codexSession.open",
+    "onCommand:codexSession.copyName",
+    "onCommand:codexSession.copyId",
+    "onCommand:codexSession.showArchived",
+    "onCommand:codexSession.hideArchived"
+  ],
+  "extensionDependencies": [
+    "openai.chatgpt"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "codexSession.refresh",
+        "title": "Refresh Sessions",
+        "category": "Codex Sessions",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "codexSession.copyName",
+        "title": "Copy Session Name",
+        "category": "Codex Sessions"
+      },
+      {
+        "command": "codexSession.copyId",
+        "title": "Copy Session ID",
+        "category": "Codex Sessions"
+      },
+      {
+        "command": "codexSession.showArchived",
+        "title": "Show Archived Sessions",
+        "category": "Codex Sessions",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "codexSession.hideArchived",
+        "title": "Hide Archived Sessions",
+        "category": "Codex Sessions",
+        "icon": "$(eye-closed)"
+      }
+    ],
+    "configuration": {
+      "title": "Codex Sessions",
+      "type": "object",
+      "properties": {
+        "codexSession.showArchived": {
+          "type": "boolean",
+          "default": false,
+          "scope": "window",
+          "description": "Show archived Codex sessions in the current workspace list."
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "codexSession",
+          "title": "Codex Sessions",
+          "icon": "media/codex-sessions.svg"
+        }
+      ]
+    },
+    "views": {
+      "codexSession": [
+        {
+          "id": "codexSession.sessions",
+          "name": "Current Workspace",
+          "type": "tree"
+        }
+      ]
+    },
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "codexSession.copyName",
+          "when": "false"
+        },
+        {
+          "command": "codexSession.copyId",
+          "when": "false"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "codexSession.showArchived",
+          "when": "view == codexSession.sessions && !config.codexSession.showArchived",
+          "group": "navigation@1"
+        },
+        {
+          "command": "codexSession.hideArchived",
+          "when": "view == codexSession.sessions && config.codexSession.showArchived",
+          "group": "navigation@1"
+        },
+        {
+          "command": "codexSession.refresh",
+          "when": "view == codexSession.sessions",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "codexSession.copyName",
+          "when": "view == codexSession.sessions && viewItem == codexSession.session",
+          "group": "9_copy@1"
+        },
+        {
+          "command": "codexSession.copyId",
+          "when": "view == codexSession.sessions && viewItem == codexSession.session",
+          "group": "9_copy@2"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run format:check && npm test",
+    "test": "node --test",
+    "prepackage": "node -e \"require('node:fs').mkdirSync('dist', { recursive: true })\"",
+    "package": "npx --yes @vscode/vsce package --allow-missing-repository --out dist/codex-session-0.2.0.vsix"
+  },
+  "devDependencies": {
+    "prettier": "3.9.8"
+  }
+}
