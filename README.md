@@ -11,6 +11,8 @@
 
 セッションデータの変更、削除、アーカイブ操作は行いません。
 
+<img width="537" height="275" alt="image" src="https://github.com/user-attachments/assets/d936e23f-afa9-4359-92e2-8834d8767b08" />
+
 ## 必要条件
 
 - VS Code 1.138以降
