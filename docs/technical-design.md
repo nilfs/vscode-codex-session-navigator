@@ -14,7 +14,7 @@
 1. `CODEX_HOME`、未設定の場合は `~/.codex` を参照します。
 2. 番号が最大の `state_*.sqlite` を読み取り専用で開きます。
 3. `threads` テーブルから `source = 'vscode'` のセッションを取得します。
-4. `codexSession.showArchived` が無効な場合は、アーカイブ済みセッションを除外します。
+4. `codexSessionNavigator.showArchived` が無効な場合は、アーカイブ済みセッションを除外します。
 5. 更新日時の新しい順に並べます。
 
 必須列は `id`、`cwd`、`source`、`archived` です。スキーマに互換性がない場合は推測を行わず、ビュー内にエラーを表示します。
@@ -43,9 +43,9 @@ Codex IDE拡張には、他の拡張機能がセッション一覧を取得し�
 
 ## 設定
 
-| 設定                        | 型      | 既定値  | 説明                                         |
-| --------------------------- | ------- | ------- | -------------------------------------------- |
-| `codexSession.showArchived` | boolean | `false` | アーカイブ済みセッションも一覧に表示します。 |
+| 設定                                 | 型      | 既定値  | 説明                                         |
+| ------------------------------------ | ------- | ------- | -------------------------------------------- |
+| `codexSessionNavigator.showArchived` | boolean | `false` | アーカイブ済みセッションも一覧に表示します。 |
 
 ビュー上部の表示切り替えボタンは、この設定の実効スコープへ値を保存します。設定ファイルから変更した場合も一覧を自動更新します。
 
@@ -62,4 +62,4 @@ Codex IDE拡張には、他の拡張機能がセッション一覧を取得し�
 - `integration/extension-host-tests.js`: VS Code Extension Host上のコマンド統合テスト
 - `npm run format:check`: Prettierによるフォーマット検証
 - `npm run check`: フォーマット検証と単体テスト
-- `npm run package`: `dist/codex-session-0.2.0.vsix` を生成
+- `npm run package`: `dist/codex-session-navigator-0.2.0.vsix` を生成

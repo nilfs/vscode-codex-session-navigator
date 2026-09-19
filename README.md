@@ -1,4 +1,4 @@
-# Codex Sessions
+# Codex Session Navigator
 
 現在のVS Codeワークスペースに関連するローカルCodexセッションを、サイドバーからすばやく探して開くための拡張機能です。
 
@@ -30,15 +30,15 @@ npm ci
 npm run package
 ```
 
-生成先は `dist/codex-session-0.2.0.vsix` です。
+生成先は `dist/codex-session-navigator-0.2.0.vsix` です。
 
 ## 使い方
 
 1. Activity BarのCodex Sessionsアイコンを開きます。
-2. `Current Workspace` の一覧からセッションを選択します。
+2. `Workspace Sessions` の一覧からセッションを選択します。
 3. 必要に応じて、ビュー上部の目のアイコンでアーカイブ済みセッションの表示を切り替えます。
 
-セッションを右クリックすると、表示名またはセッションIDをコピーできます。アーカイブ表示の選択は `codexSession.showArchived` 設定に保存されます。
+セッションを右クリックすると、表示名またはセッションIDをコピーできます。アーカイブ表示の選択は `codexSessionNavigator.showArchived` 設定に保存されます。
 
 ## 開発
 

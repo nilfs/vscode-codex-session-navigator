@@ -8,7 +8,7 @@ const { filterSessionsForWorkspaceRoots } = require('./lib/workspace-paths');
 
 const CODEX_EXTENSION_ID = 'openai.chatgpt';
 const CODEX_EDITOR_VIEW_TYPE = 'chatgpt.conversationEditor';
-const SHOW_ARCHIVED_SETTING = 'codexSession.showArchived';
+const SHOW_ARCHIVED_SETTING = 'codexSessionNavigator.showArchived';
 
 class SessionTreeItem extends vscode.TreeItem {
   constructor(session) {
@@ -26,9 +26,9 @@ class SessionTreeItem extends vscode.TreeItem {
       ...(session.archived ? ['Status: Archived'] : []),
     ].join('\n');
     this.iconPath = new vscode.ThemeIcon(session.archived ? 'archive' : 'comment-discussion');
-    this.contextValue = 'codexSession.session';
+    this.contextValue = 'codexSessionNavigator.session';
     this.command = {
-      command: 'codexSession.open',
+      command: 'codexSessionNavigator.open',
       title: 'Open Codex Session',
       arguments: [session],
     };
@@ -97,7 +97,7 @@ class CodexSessionTreeProvider {
 
     try {
       const showArchived = vscode.workspace
-        .getConfiguration('codexSession')
+        .getConfiguration('codexSessionNavigator')
         .get('showArchived', false);
       const sessions = readLocalVscodeSessions({ includeArchived: showArchived });
       const matchingSessions = filterSessionsForWorkspaceRoots(sessions, workspaceRoots);
@@ -189,7 +189,7 @@ async function copySessionId(commandArgument) {
 }
 
 async function setShowArchived(showArchived) {
-  const configuration = vscode.workspace.getConfiguration('codexSession');
+  const configuration = vscode.workspace.getConfiguration('codexSessionNavigator');
   const inspection = configuration.inspect('showArchived');
   let target = vscode.ConfigurationTarget.Global;
 
@@ -204,7 +204,7 @@ async function setShowArchived(showArchived) {
 
 function activate(context) {
   const provider = new CodexSessionTreeProvider();
-  const treeView = vscode.window.createTreeView('codexSession.sessions', {
+  const treeView = vscode.window.createTreeView('codexSessionNavigator.sessions', {
     treeDataProvider: provider,
     showCollapseAll: false,
   });
@@ -212,12 +212,16 @@ function activate(context) {
   context.subscriptions.push(
     provider,
     treeView,
-    vscode.commands.registerCommand('codexSession.refresh', () => provider.refresh()),
-    vscode.commands.registerCommand('codexSession.open', openCodexSession),
-    vscode.commands.registerCommand('codexSession.copyName', copySessionName),
-    vscode.commands.registerCommand('codexSession.copyId', copySessionId),
-    vscode.commands.registerCommand('codexSession.showArchived', () => setShowArchived(true)),
-    vscode.commands.registerCommand('codexSession.hideArchived', () => setShowArchived(false)),
+    vscode.commands.registerCommand('codexSessionNavigator.refresh', () => provider.refresh()),
+    vscode.commands.registerCommand('codexSessionNavigator.open', openCodexSession),
+    vscode.commands.registerCommand('codexSessionNavigator.copyName', copySessionName),
+    vscode.commands.registerCommand('codexSessionNavigator.copyId', copySessionId),
+    vscode.commands.registerCommand('codexSessionNavigator.showArchived', () =>
+      setShowArchived(true),
+    ),
+    vscode.commands.registerCommand('codexSessionNavigator.hideArchived', () =>
+      setShowArchived(false),
+    ),
     vscode.workspace.onDidChangeWorkspaceFolders(() => provider.refresh()),
     vscode.workspace.onDidChangeConfiguration((event) => {
       if (event.affectsConfiguration(SHOW_ARCHIVED_SETTING)) {

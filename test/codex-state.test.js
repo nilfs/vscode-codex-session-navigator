@@ -14,7 +14,7 @@ const {
 } = require('../lib/codex-state');
 
 function createTemporaryDirectory(testContext) {
-  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'codex-session-test-'));
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'codex-session-navigator-test-'));
   testContext.after(() => fs.rmSync(directory, { recursive: true, force: true }));
   return directory;
 }
